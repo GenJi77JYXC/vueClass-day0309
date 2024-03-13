@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue2.7.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/elementui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="js/ui.css"/>
+	</head>
+    <!-- 
+        cityName: "大连"
+        confirmedCount: 161
+        curedCount: 127
+        currentConfirmedCount: 34
+        deadCount: 0
+        locationId: 210200
+        suspectedCount: 0
+     -->
+    <body>
+        <div id="app">
+            
+            <ul v-for="item in dataShow" :key="item.locationId">
+				<h1>{{ item.provinceName }}</h1>
+                <el-table
+                  :data="item.cities"
+                  style="width: 100%">
+                  <el-table-column
+                    prop="cityName"
+                    label="城市名称"
+                    width="180">
+                  </el-table-column>
+                  <el-table-column
+                    prop="confirmedCount"
+                    label="确诊人数"
+                    width="180">
+                  </el-table-column>
+            
+            
+                  <el-table-column
+                    prop="deadCount"
+                    label="死亡人数"
+                    width="180">
+                  </el-table-column>
+                  <el-table-column
+                    prop="locationId"
+                    label="城市代码"
+                    width="180">
+                  </el-table-column>
+                </el-table>
+				</ul>
+				<input type="button" value="上一页" @click="prePage">
+				<span v-for="i in pageNum" @click="page(i)" :style="{cursor: 'pointer', margin:'10px'}">{{ i }}</span>
+				<input type="button" value="下一页" @click="nextPage">
+
+        </div>
+    </body>
+
+    <script type="text/javascript">
+
+        new Vue({
+            el:"#app",
+            data:{
+                tableData: [{
+				cityName: "境外输入",
+				currentConfirmedCount: 102,
+				confirmedCount: 1202,
+				suspectedCount: 4,
+				curedCount: 1100,
+				deadCount: 0,
+				locationId: 0
+			},
+			{
+				cityName: "外地来沪",
+				currentConfirmedCount: 0,
+				confirmedCount: 113,
+				suspectedCount: 0,
+				curedCount: 112,
+				deadCount: 1,
+				locationId: 0
+			},
+			{
+				cityName: "浦东新区",
+				currentConfirmedCount: 0,
+				confirmedCount: 68,
+				suspectedCount: 0,
+				curedCount: 67,
+				deadCount: 1,
+				locationId: 310115
+			},
+			{
+				cityName: "宝山区",
+				currentConfirmedCount: 0,
+				confirmedCount: 22,
+				suspectedCount: 0,
+				curedCount: 21,
+				deadCount: 1,
+				locationId: 310113
+			},
+			{
+				cityName: "闵行区",
+				currentConfirmedCount: 0,
+				confirmedCount: 19,
+				suspectedCount: 0,
+				curedCount: 19,
+				deadCount: 0,
+				locationId: 310112
+			},
+			{
+				cityName: "徐汇区",
+				currentConfirmedCount: 0,
+				confirmedCount: 18,
+				suspectedCount: 0,
+				curedCount: 17,
+				deadCount: 1,
+				locationId: 310104
+			},
+			{
+				cityName: "静安区",
+				currentConfirmedCount: 0,
+				confirmedCount: 16,
+				suspectedCount: 0,
+				curedCount: 15,
+				deadCount: 1,
+				locationId: 310106
+			},
+			{
+				cityName: "松江区",
+				currentConfirmedCount: 0,
+				confirmedCount: 14,
+				suspectedCount: 0,
+				curedCount: 14,
+				deadCount: 0,
+				locationId: 310117
+			},
+			{
+				cityName: "长宁区",
+				currentConfirmedCount: 0,
+				confirmedCount: 13,
+				suspectedCount: 0,
+				curedCount: 13,
+				deadCount: 0,
+				locationId: 310105
+			},
+			{
+				cityName: "普陀区",
+				currentConfirmedCount: 0,
+				confirmedCount: 11,
+				suspectedCount: 0,
+				curedCount: 11,
+				deadCount: 0,
+				locationId: 310107
+			},
+			{
+				cityName: "杨浦区",
+				currentConfirmedCount: 0,
+				confirmedCount: 9,
+				suspectedCount: 0,
+				curedCount: 9,
+				deadCount: 0,
+				locationId: 310110
+			},
+			{
+				cityName: "嘉定区",
+				currentConfirmedCount: 0,
+				confirmedCount: 9,
+				suspectedCount: 0,
+				curedCount: 7,
+				deadCount: 2,
+				locationId: 310114
+			},
+			{
+				cityName: "奉贤区",
+				currentConfirmedCount: 0,
+				confirmedCount: 9,
+				suspectedCount: 0,
+				curedCount: 9,
+				deadCount: 0,
+				locationId: 310120
+			},
+			{
+				cityName: "虹口区",
+				currentConfirmedCount: 0,
+				confirmedCount: 7,
+				suspectedCount: 0,
+				curedCount: 7,
+				deadCount: 0,
+				locationId: 310109
+			},
+			{
+				cityName: "黄浦区",
+				currentConfirmedCount: 0,
+				confirmedCount: 6,
+				suspectedCount: 0,
+				curedCount: 6,
+				deadCount: 0,
+				locationId: 310101
+			},
+			{
+				cityName: "青浦区",
+				currentConfirmedCount: 0,
+				confirmedCount: 6,
+				suspectedCount: 0,
+				curedCount: 6,
+				deadCount: 0,
+				locationId: 310118
+			},
+			{
+				cityName: "金山区",
+				currentConfirmedCount: 0,
+				confirmedCount: 4,
+				suspectedCount: 0,
+				curedCount: 4,
+				deadCount: 0,
+				locationId: 310116
+			},
+			{
+				cityName: "崇明区",
+				currentConfirmedCount: 0,
+				confirmedCount: 4,
+				suspectedCount: 0,
+				curedCount: 4,
+				deadCount: 0,
+				locationId: 310151
+			},
+			{
+				cityName: "境外来沪",
+				currentConfirmedCount: 0,
+				confirmedCount: 1,
+				suspectedCount: 0,
+				curedCount: 1,
+				deadCount: 0,
+				locationId: 0
+			}],
+			totalData: [
+			{
+				"provinceName": "香港",
+				"provinceShortName": "香港",
+				"currentConfirmedCount": 695,
+				"confirmedCount": 9107,
+				"suspectedCount": 176,
+				"curedCount": 8258,
+				"deadCount": 154,
+				"comment": "疑似 1 例",
+				"locationId": 810000,
+				"statisticsData": "https://file1.dxycdn.com/2020/0223/331/3398299755968040033-135.json",
+				"cities": []
+			},
+			],
+			totalPage: [], // 所有分页的数据
+            pageSize: 1, // 每页显示数量
+            pageNum: 1,  // 共几页=所有数据/每页现实数量     
+            dataShow: [], // 当前显示的数据  
+            currentPage: 0 // 默认当前显示第一页
+            },
+            created() { //初始化函数
+				console.log("vue实例被创建")
+				
+				
+				//发送请求	
+				axios.get("js/quanguo.json")
+				.then(res=>{
+					this.totalData = res.data
+					console.log(this.totalData.length)
+						//遍历res.data数组
+						console.log("遍历res.data数组")
+						for (i = 0; i < res.data.length; i ++ ){
+							// console.log(res.data[i].provinceName)
+							//将返回来的数据绑定到 表格变量上
+							this.tableData=res.data[i].cities;
+						}
+						this.pageNum = Math.ceil(this.totalData.length / this.pageSize) || 1;//计算有多少页数据，默认为1
+						console.log(this.totalData.length)
+						// 循环页面
+						for (let i = 0; i < this.pageNum; i++) {
+						// 每一页都是一个数组 形如 [['第一页的数据'],['第二页的数据'],['第三页数据']]
+						// 根据每页显示数量 将后台的数据分割到 每一页,假设pageSize为2， 则第一页是1-2条，即slice(0,2)，第二页是3-4条，即slice(3,4)以此类推
+						this.totalPage[i] = this.totalData.slice(this.pageSize * i, this.pageSize * (i + 1))
+						}
+						console.log(this.pageNum)
+						// console.log()
+
+						// 获取到数据后默认显示第一页内容
+						this.dataShow = this.totalPage[this.currentPage];
+					
+					
+				})
+
+				
+                
+            },
+			methods:{
+            // 下一页
+            nextPage() {
+              if (this.currentPage === this.pageNum - 1) return ;
+              this.dataShow = this.totalPage[++this.currentPage];
+            },
+            // 上一页
+            prePage() {
+              if (this.currentPage === 0) return ;
+              this.dataShow = this.totalPage[--this.currentPage];
+            },
+            // 点击页码
+            page(i){
+                this.currentPage = i
+                this.dataShow = this.totalPage[i-1];
+            }
+        
+          }
+        })
+    </script>
+</html>

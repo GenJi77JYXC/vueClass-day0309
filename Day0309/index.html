@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/vue2.7.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/elementui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="js/ui.css"/>
+		<style>
+		  .el-carousel__item h3 {
+		    color: #475669;
+		    font-size: 14px;
+		    opacity: 0.75;
+		    line-height: 200px;
+		    margin: 0;
+		  }
+		  
+		  .el-carousel__item:nth-child(2n) {
+		    background-color: #99a9bf;
+		  }
+		  
+		  .el-carousel__item:nth-child(2n+1) {
+		    background-color: #d3dce6;
+		  }
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<el-carousel :interval="4000" type="card" height="200px">
+			    <el-carousel-item v-for="item in 6" :key="item">
+			      <h3 class="medium">{{ item }}</h3>
+			    </el-carousel-item>
+			  </el-carousel>
+			
+			{{msg}}<br />
+			{{num}}
+			<button type="button" @click="add()">加法</button>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el:"#app",
+				data:{
+					msg:"信息",
+					num:100
+				},
+				methods:{ //这里是所有函数的合集
+					add(){
+						this.num=this.num+100;
+					}
+				
+				
+					
+				}
+			})
+		</script>
+	</body>
+</html>

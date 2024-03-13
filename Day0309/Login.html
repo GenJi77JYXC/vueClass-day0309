@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue2.7.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/elementui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="js/ui.css"/>
+		
+		<style type="text/css">
+			#app{
+				width: 300px;
+				height: 200px;
+				border: 1px solid #8C939D;
+				border-radius: 5px;
+				text-align: center;
+				margin: 200px auto;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div id="app"><br />
+			账号：<el-input placeholder="请输入内容" style=" width: 70%;" v-model="uname" clearable></el-input><br />
+			<br />密码：<el-input placeholder="请输入内容" style=" width: 70%;" v-model="upwd" clearable></el-input><br />
+			<br />  <el-button type="primary" round @click="submit()">登录</el-button>
+		</div>
+		<script type="text/javascript">
+			new Vue({
+				el:"#app",
+				data:{
+					uname:"",
+					upwd:""
+				},
+				methods:{
+					submit(){
+						//alert(this.uname+"-----------"+this.upwd)
+						if(this.uname=="admin" && this.upwd=="123456"){
+							location.href="home.html"
+						}else{
+							alert("用户或密码不正确")
+						}
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
